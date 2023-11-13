@@ -374,12 +374,17 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import "@/assets/landing/scss/style.scss";
-
 export default defineComponent({
   name: "Home",
 });
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/landing/scss/style.scss";
+.content-wrapper {
+  background-color: #fff;
+}
+</style>
 
 <style lang="scss">
 html {
