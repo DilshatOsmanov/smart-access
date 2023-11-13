@@ -22,6 +22,24 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/",
+    component: () => import("@/components/Layout.vue"),
+    children: [
+      {
+        path: "/main",
+        name: "main",
+        component: () => import("@/views/Main.vue"),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: "/users",
+        name: "user-list",
+        component: () => import("@/views/UserList.vue"),
+        meta: { middleware: [isAuth] },
+      },
+    ],
+  },
+  {
     path: "/sign-in",
     component: () => import("@/views/authentication/SignIn.vue"),
     meta: { middleware: [isAuth] },

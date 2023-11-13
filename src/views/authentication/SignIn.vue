@@ -42,7 +42,7 @@
                           placeholder="Пароль"
                         />
                       </div>
-                      <router-link to="/404" class="btn btn-success btn-block">
+                      <router-link to="/main" class="btn btn-success btn-block">
                         Авторизоваться
                       </router-link>
 
