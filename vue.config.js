@@ -3,7 +3,7 @@ module.exports = {
     workboxPluginMode: 'InjectManifest',
     themeColor: '#fff',
     workboxOptions: {
-      skipWaiting: true,
+      clientsClaim: true,
       swSrc: 'service-worker.js',
     },
     appleMobileWebAppCapable: 'yes',
