@@ -9,7 +9,7 @@
                 <img src="@/assets/images/logo.svg" alt="" height="35" />
               </span>
               <i class="d-lg-none">
-                <img src="@/assets/images/logo-small.png" alt="" height="24" />
+                <img src="@/assets/images/logo-small.svg" alt="" height="30" />
               </i>
             </router-link>
           </div>

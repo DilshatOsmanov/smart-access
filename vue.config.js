@@ -3,5 +3,6 @@ module.exports = {
     workboxOptions: {
       skipWaiting: true,
     },
+    appleMobileWebAppCapable: 'yes',
   },
 };
