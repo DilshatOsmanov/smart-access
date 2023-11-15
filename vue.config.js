@@ -1,5 +1,6 @@
 module.exports = {
   pwa: {
+    themeColor: '#fff',
     workboxOptions: {
       skipWaiting: true,
     },
