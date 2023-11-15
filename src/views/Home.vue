@@ -4,7 +4,7 @@
       <div class="container">
         <div class="navbar-brand-wrapper d-flex w-100">
           <router-link to="/">
-            <img class="h-40px" src="@/assets/landing/images/logo.svg" alt="" />
+            <img class="h-35px" src="@/assets/landing/images/logo.svg" alt="" />
           </router-link>
           <router-link
             to="/sign-in"
@@ -341,7 +341,7 @@
           <div class="col-12 col-md-6 col-lg-3 grid-margin">
             <router-link to="/">
               <img
-                class="h-40px pb-2"
+                class="h-35px pb-2"
                 src="@/assets/landing/images/logo.svg"
                 alt=""
               />

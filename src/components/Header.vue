@@ -6,7 +6,7 @@
           <div class="navbar-brand-box mr-3 mr-lg-5">
             <router-link to="/" class="logo">
               <span class="d-none d-lg-block">
-                <img src="@/assets/images/logo.svg" alt="" height="35" />
+                <img src="@/assets/images/logo.svg" alt="" height="30" />
               </span>
               <i class="d-lg-none">
                 <img src="@/assets/images/logo-small.svg" alt="" height="30" />
