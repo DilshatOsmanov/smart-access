@@ -5,6 +5,6 @@ module.exports = {
       skipWaiting: true,
     },
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'transparent',
+    appleMobileWebAppStatusBarStyle: 'auto',
   },
 };
