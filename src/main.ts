@@ -6,17 +6,6 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/service-worker.js')
-    .then((registration) => {
-      console.log('Service Worker registered with scope:', registration.scope);
-    })
-    .catch((error) => {
-      console.error('Service Worker registration failed:', error);
-    });
-}
-
 sync(store, router);
 
 (createApp(App).config as any).productionTip = false;
