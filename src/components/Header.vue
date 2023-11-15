@@ -27,135 +27,6 @@
           <div class="dropdown d-inline-block ml-2">
             <button
               type="button"
-              class="btn header-item noti-icon"
-              id="page-header-search-dropdown"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-magnify"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
-              aria-labelledby="page-header-search-dropdown"
-            >
-              <form class="p-3">
-                <div class="form-group m-0">
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Search ..."
-                      aria-label="Recipient's username"
-                    />
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">
-                        <i class="mdi mdi-magnify"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div class="dropdown d-inline-block ml-1">
-            <button
-              type="button"
-              class="btn header-item noti-icon"
-              id="page-header-notifications-dropdown"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="mdi mdi-bell-outline"></i>
-              <span class="badge badge-danger badge-pill">6</span>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
-              aria-labelledby="page-header-notifications-dropdown"
-            >
-              <div class="p-3">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <h6 class="m-0">Notifications</h6>
-                  </div>
-                  <div class="col-auto">
-                    <a href="#!" class="small"> View All</a>
-                  </div>
-                </div>
-              </div>
-              <div class="custom-scroll" style="max-height: 230px">
-                <a href="" class="text-reset">
-                  <div class="media p-3">
-                    <img
-                      src="@/assets/images/users/avatar-2.jpg"
-                      class="mr-3 rounded-circle avatar-xs"
-                      alt="user-pic"
-                    />
-                    <div class="media-body">
-                      <h6 class="mt-0 mb-1">Samuel Coverdale</h6>
-                      <p class="font-size-12 mb-1">
-                        You have new follower on Instagram
-                      </p>
-                      <p class="font-size-12 mb-0 text-muted">
-                        <i class="mdi mdi-clock-outline"></i> 2 min ago
-                      </p>
-                    </div>
-                  </div>
-                </a>
-                <a href="" class="text-reset">
-                  <div class="media p-3">
-                    <div class="avatar-xs mr-3">
-                      <span class="avatar-title bg-success rounded-circle">
-                        <i class="mdi mdi-cloud-download-outline"></i>
-                      </span>
-                    </div>
-                    <div class="media-body">
-                      <h6 class="mt-0 mb-1">Download Available !</h6>
-                      <p class="font-size-12 mb-1">
-                        Latest version of admin is now available. Please
-                        download here.
-                      </p>
-                      <p class="font-size-12 mb-0 text-muted">
-                        <i class="mdi mdi-clock-outline"></i> 4 hours ago
-                      </p>
-                    </div>
-                  </div>
-                </a>
-                <a href="" class="text-reset">
-                  <div class="media p-3">
-                    <img
-                      src="@/assets/images/users/avatar-3.jpg"
-                      class="mr-3 rounded-circle avatar-xs"
-                      alt="user-pic"
-                    />
-                    <div class="media-body">
-                      <h6 class="mt-0 mb-1">Victoria Mendis</h6>
-                      <p class="font-size-12 mb-1">
-                        Just upgraded to premium account.
-                      </p>
-                      <p class="font-size-12 mb-0 text-muted">
-                        <i class="mdi mdi-clock-outline"></i> 1 day ago
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="p-2 border-top">
-                <a
-                  class="btn btn-sm btn-light btn-block text-center"
-                  href="javascript:void(0)"
-                >
-                  <i class="mdi mdi-arrow-down-circle mr-1"></i> Load More..
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="dropdown d-inline-block ml-2">
-            <button
-              type="button"
               class="btn header-item"
               id="page-header-user-dropdown"
               data-toggle="dropdown"
@@ -167,46 +38,28 @@
                 src="@/assets/images/users/avatar-1.jpg"
                 alt="Header Avatar"
               />
-              <span class="d-none d-sm-inline-block ml-1">Henry</span>
-              <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a
+            <div
+              class="dropdown-menu dropdown-menu-right"
+              aria-labelledby="page-header-user-dropdown"
+            >
+              <router-link
                 class="dropdown-item d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/profile"
               >
-                <span>Inbox</span>
-                <span>
-                  <span class="badge badge-pill badge-success">3</span>
-                </span>
-              </a>
-              <a
+                Профиль
+              </router-link>
+              <router-link
                 class="dropdown-item d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
+                to="/settings"
               >
-                <span>Profile</span>
-                <span>
-                  <span class="badge badge-pill badge-info">1</span>
-                </span>
-              </a>
-              <a
+                Настройки
+              </router-link>
+              <button
                 class="dropdown-item d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
               >
-                Settings
-              </a>
-              <a
-                class="dropdown-item d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                <span>Lock Account</span>
-              </a>
-              <a
-                class="dropdown-item d-flex align-items-center justify-content-between"
-                href="javascript:void(0)"
-              >
-                <span>Log Out</span>
-              </a>
+                <span>Выйти</span>
+              </button>
             </div>
           </div>
         </div>

@@ -1,0 +1,1 @@
+<template>Настройки</template>

@@ -32,9 +32,33 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
+        path: "/attendance",
+        name: "attendance",
+        component: () => import("@/views/Attendance.vue"),
+        meta: { middleware: [isAuth] },
+      },
+      {
         path: "/users",
         name: "user-list",
         component: () => import("@/views/UserList.vue"),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: "/tourniquets",
+        name: "tourniquets",
+        component: () => import("@/views/Tourniquets.vue"),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: "/profile",
+        name: "profile",
+        component: () => import("@/views/Profile.vue"),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: "/settings",
+        name: "settings",
+        component: () => import("@/views/Settings.vue"),
         meta: { middleware: [isAuth] },
       },
     ],

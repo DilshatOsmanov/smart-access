@@ -1,1 +1,1 @@
-<template>Users</template>
+<template>Пользователи</template>

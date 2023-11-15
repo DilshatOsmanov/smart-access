@@ -1,2 +1,2 @@
-<template>Dashboard</template>
+<template>Дашборд</template>
 
