@@ -1,4 +1,7 @@
-export default function auth({ next, store, nextMiddleware }) {
+import { NavigationGuardNext } from 'vue-router';
+import { Store } from 'vuex';
+
+export default function auth({ next, store, nextMiddleware }: { next: NavigationGuardNext; store: Store<unknown>; nextMiddleware: () => void }) {
   if (store.getters.isUserAuthenticated) {
     switch (store.getters.getUserRole) {
       case 'Parent':
