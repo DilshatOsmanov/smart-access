@@ -32,7 +32,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Обработка запросов
+// Обработка запросов с использованием стратегии Cache First
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches
