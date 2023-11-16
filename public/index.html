@@ -78,18 +78,4 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-
-  <script>
-    // Учтем высоту статус-бара
-    function updateMainContentHeight() {
-        const mainContent = document.getElementById('app');
-        const statusBarHeight = window.innerHeight - document.documentElement.clientHeight;
-
-        mainContent.style.height = `calc(100vh - ${statusBarHeight}px)`;
-    }
-
-    // Вызываем функцию при загрузке страницы и при изменении размеров окна
-    window.addEventListener('load', updateMainContentHeight);
-    window.addEventListener('resize', updateMainContentHeight);
-</script>
 </html>
