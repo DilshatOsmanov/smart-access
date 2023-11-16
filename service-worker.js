@@ -1,41 +1,66 @@
-/* eslint-disable no-undef */
+// Имя кэша для версии сервис-воркера
+const CACHE_NAME = 'my-app-cache-v1';
 
-//Only if you use google analytics and wants to send the offline views
-workbox.googleAnalytics.initialize();
+// Установка и активация сервис-воркера
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => {
+        // Кэширование известных ресурсов при установке
+        return cache.addAll(['/', 'index.html', 'css/', 'js/', 'img/']);
+      })
+      .then(() => self.skipWaiting()), // Активация сервис-воркера после установки
+  );
+});
 
-//This is how you can use the network first strategy for files ending with .js
-workbox.routing.registerRoute(/.*\.js/, workbox.strategies.networkFirst());
+// Активация сервис-воркера при установке
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((name) => {
+            if (name !== CACHE_NAME) {
+              return caches.delete(name);
+            }
+          }),
+        );
+      })
+      .then(() => self.clients.claim()), // Установка сервис-воркера в качестве активного на всех страницах
+  );
+});
 
-// Use cache but update cache files in the background ASAP
-workbox.routing.registerRoute(
-  /.*\.css/,
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: 'css-cache',
-  }),
-);
+// Обработка запросов с использованием стратегии Cache First
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((response) => {
+        if (response) {
+          return response;
+        }
 
-//Cache first, but defining duration and maximum files
-workbox.routing.registerRoute(
-  /.*\.(?:png|jpg|jpeg|svg|gif)/,
-  workbox.strategies.cacheFirst({
-    cacheName: 'image-cache',
-    plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 20,
-        maxAgeSeconds: 7 * 24 * 60 * 60,
+        return fetch(event.request).then((networkResponse) => {
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
+          ) {
+            return networkResponse;
+          }
+
+          const clonedResponse = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clonedResponse);
+          });
+
+          return networkResponse;
+        });
+      })
+      .catch((error) => {
+        console.error('Cache match error:', error);
       }),
-    ],
-  }),
-);
-
-workbox.routing.registerRoute(
-  new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'),
-  workbox.strategies.cacheFirst({
-    cacheName: 'googleapis',
-    plugins: [
-      new workbox.expiration.Plugin({
-        maxEntries: 30,
-      }),
-    ],
-  }),
-);
+  );
+});
