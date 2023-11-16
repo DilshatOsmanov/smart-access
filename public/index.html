@@ -8,12 +8,24 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="<%= BASE_URL %>img/icons/android-chrome-192x192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>img/icons/android-chrome-192x192.png" />
-    <link rel="apple-touch-icon" sizes="167x167" href="<%= BASE_URL %>img/icons/android-chrome-192x192.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="<%= BASE_URL %>img/icons/android-chrome-192x192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="<%= BASE_URL %>img/icons/android-chrome-192x192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="<%= BASE_URL %>img/icons/android-chrome-192x192.png"
+    />
     <link
       rel="apple-touch-startup-image"
       href="<%= BASE_URL %>img/splash/apple_splash_640.png"
@@ -24,7 +36,11 @@
       href="<%= BASE_URL %>img/splash/apple_splash_750.png"
       media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
     />
-    <link href="<%= BASE_URL %>img/splash/apple_splash_828.png" sizes="828x1792" rel="apple-touch-startup-image" />
+    <link
+      href="<%= BASE_URL %>img/splash/apple_splash_828.png"
+      sizes="828x1792"
+      rel="apple-touch-startup-image"
+    />
     <link
       rel="apple-touch-startup-image"
       href="<%= BASE_URL %>img/splash/apple_splash_1242.png"
@@ -62,4 +78,18 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+
+  <script>
+    // Учтем высоту статус-бара
+    function updateMainContentHeight() {
+      const mainContent = document.getElementById('mainContent');
+      const statusBarHeight = window.innerHeight - document.documentElement.clientHeight;
+
+      mainContent.style.height = `calc(100vh - ${statusBarHeight}px)`;
+    }
+
+    // Вызываем функцию при загрузке страницы и при изменении размеров окна
+    window.addEventListener('load', updateMainContentHeight);
+    window.addEventListener('resize', updateMainContentHeight);
+  </script>
 </html>
