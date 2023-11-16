@@ -1,7 +1,7 @@
 module.exports = {
   pwa: {
     workboxPluginMode: 'InjectManifest',
-    themeColor: '#000',
+    themeColor: '#fff',
     workboxOptions: {
       swSrc: 'service-worker.js',
     },
