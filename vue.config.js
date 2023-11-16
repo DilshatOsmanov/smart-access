@@ -4,7 +4,7 @@ module.exports = {
     themeColor: '#fff',
     workboxOptions: {
       swSrc: 'service-worker.js',
-      cachingStrategy: 'CacheFirst',
+      strategy: 'CacheFirst',
     },
     appleMobileWebAppCapable: 'yes',
   },
