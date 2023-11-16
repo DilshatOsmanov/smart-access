@@ -30,11 +30,14 @@ self.addEventListener('activate', (event) => {
 
 // Обработка запросов
 self.addEventListener('fetch', (event) => {
+  console.log('Fetch event:', event.request.url);
+
   event.respondWith(
     caches
       .match(event.request)
       .then((response) => {
         if (response) {
+          console.log('Cached response:', response);
           return response;
         }
 
@@ -44,15 +47,21 @@ self.addEventListener('fetch', (event) => {
             networkResponse.status !== 200 ||
             networkResponse.type !== 'basic'
           ) {
-            console.error('Fetch error for', event.request.url, 'Status:', networkResponse.status);
+            console.error(
+              'Fetch error for',
+              event.request.url,
+              'Status:',
+              networkResponse ? networkResponse.status : 'N/A',
+            );
             return networkResponse;
           }
 
           const clonedResponse = networkResponse.clone();
-          // eslint-disable-next-line no-undef
-          caches.open(RUNTIME).then((cache) => {
+          caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, clonedResponse);
           });
+
+          console.log('Network response:', networkResponse);
 
           return networkResponse;
         });
