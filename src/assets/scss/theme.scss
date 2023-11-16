@@ -39,3 +39,7 @@ File: App Css
 // Pages
 @import "pages/auth";
 @import "pages/pricing";
+
+#app {
+    margin-top: env(safe-area-inset-top) !important;
+}
