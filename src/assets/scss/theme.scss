@@ -9,38 +9,41 @@ File: App Css
 @import url('https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap');
 
 //Core files
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "variables";
-@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import 'variables';
+@import '~bootstrap/scss/mixins';
 
 // Structure
-@import "structure/menu";
-@import "structure/header";
-@import "structure/footer";
+@import 'structure/menu';
+@import 'structure/header';
+@import 'structure/footer';
 
 // Components
-@import "components/avatar";
-@import "components/helper";
-@import "components/demos";
+@import 'components/avatar';
+@import 'components/helper';
+@import 'components/demos';
 
 // Plugins
-@import "plugins/slimscroll";
-@import "plugins/sweetalert";
-@import "plugins/morris";
-@import "plugins/sparkline-chart";
-@import "plugins/datatable";
-@import "plugins/calendar";
-@import "plugins/maps";
-@import "plugins/select2";
-@import "plugins/datepicker";
-@import "plugins/daterange";
+@import 'plugins/slimscroll';
+@import 'plugins/sweetalert';
+@import 'plugins/morris';
+@import 'plugins/sparkline-chart';
+@import 'plugins/datatable';
+@import 'plugins/calendar';
+@import 'plugins/maps';
+@import 'plugins/select2';
+@import 'plugins/datepicker';
+@import 'plugins/daterange';
 
 // Pages
-@import "pages/auth";
-@import "pages/pricing";
+@import 'pages/auth';
+@import 'pages/pricing';
 
 body {
-    margin-top: env(safe-area-inset-top) !important;
-    padding-top: env(safe-area-inset-top) !important;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  margin: 0;
 }
