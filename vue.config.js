@@ -6,6 +6,6 @@ module.exports = {
       swSrc: 'service-worker.js',
     },
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'rgba(128, 128, 128, 0.5)',
+    appleMobileWebAppStatusBarStyle: 'black-translucent',
   },
 };
