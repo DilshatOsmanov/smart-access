@@ -8,7 +8,7 @@ import isAuth from './middleware/isAuth';
 // @ts-ignore
 import middlewarePipeline from './middlewarePipeline';
 
-const mobileCondition = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
   navigator.userAgent,
 );
 
@@ -16,12 +16,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/views/Home.vue'),
-    meta: { middleware: [isAuth], mobileRedirect: mobileCondition },
+    meta: { middleware: [isAuth], isMobile: isMobile },
     beforeEnter: (to, from, next) => {
-      if (to.meta.mobileRedirect) {
-        return next('/sign-in');
+      if (to.meta.isMobile) {
+        next('/sign-in');
+      } else {
+        next();
       }
-      next();
     },
   },
   {
