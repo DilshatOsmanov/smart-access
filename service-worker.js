@@ -3,6 +3,7 @@ const CACHE_NAME = 'my-app-cache-v1';
 
 // Установка и активация сервис-воркера
 self.addEventListener('install', (event) => {
+  console.log('Caching...');
   event.waitUntil(
     caches
       .open(CACHE_NAME)
