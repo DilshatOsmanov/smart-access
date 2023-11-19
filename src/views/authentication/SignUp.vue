@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row mw-500px m-auto">
       <div class="col-12">
-        <div class="d-flex align-items-center min-vh-env-100">
+        <div class="d-flex align-items-center min-vh-100">
           <div class="w-100 d-block bg-white shadow rounded my-0">
             <div class="row">
               <div class="col-lg-12">

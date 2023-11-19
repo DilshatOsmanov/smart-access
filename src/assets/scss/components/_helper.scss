@@ -41,12 +41,8 @@
 .mw-500px {
   max-width: 500px;
 }
-.min-vh-env-100 {
-  min-height: calc(100vh - constant(safe-area-inset-top) - constant(safe-area-inset-bottom)) !important;
-}
 
 // Social
-
 .social-list-item {
   height: 2rem;
   width: 2rem;
