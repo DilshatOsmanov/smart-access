@@ -1,15 +1,12 @@
 <template>
   <header id="header-section">
-    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+    <nav class="navbar navbar-expand-lg pl-3 pr-3 pl-sm-0" id="navbar">
       <div class="container">
-        <div class="navbar-brand-wrapper d-flex w-100">
+        <div class="navbar-brand-wrapper d-flex justify-content-between w-100">
           <router-link class="d-flex align-items-center" to="/">
             <img class="h-25px" src="@/assets/landing/images/logo.svg" alt="" />
           </router-link>
-          <router-link
-            to="/sign-in"
-            class="navbar-btn-mobile btn btn-info ml-auto mr-2"
-          >
+          <router-link to="/sign-in" class="navbar-btn-mobile btn btn-info">
             Войти
           </router-link>
         </div>
