@@ -9,7 +9,7 @@ self.addEventListener('install', (event) => {
       .open(CACHE_NAME)
       .then((cache) => {
         // Кэширование известных ресурсов при установке
-        return cache.addAll(['/', 'index.html', 'css/', 'js/', 'img/']);
+        return cache.addAll(['/', 'index.html']);
       })
       .then(() => self.skipWaiting()), // Активация сервис-воркера после установки
   );
