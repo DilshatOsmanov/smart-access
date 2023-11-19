@@ -20,27 +20,43 @@
                   Введите адрес электронной почты и пароль для доступа к панели
                   администратора.
                 </p>
-                <form class="user">
+                <Form
+                  class="user"
+                  id="kt_login_signin_form"
+                  @submit="onSubmitLogin"
+                  :validation-schema="login"
+                >
                   <div class="form-group">
-                    <input
+                    <Field
+                      name="email"
                       type="email"
                       class="form-control form-control-user"
-                      id="exampleInputEmail"
                       placeholder="Логин"
                     />
+                    <ErrorMessage class="text-danger" name="email" />
                   </div>
                   <div class="form-group">
-                    <input
+                    <Field
+                      name="password"
                       type="password"
                       class="form-control form-control-user"
-                      id="exampleInputPassword"
                       placeholder="Пароль"
                     />
+                    <ErrorMessage class="text-danger" name="password" />
                   </div>
-                  <router-link to="/main" class="btn btn-success btn-block">
-                    Авторизоваться
-                  </router-link>
-                </form>
+                  <button
+                    type="submit"
+                    class="btn btn-success btn-block"
+                    :disabled="loading"
+                  >
+                    <span class="indicator-label"> Авторизоваться </span>
+
+                    <span
+                      v-if="loading"
+                      class="spinner-border spinner-border-sm align-middle ml-2"
+                    ></span>
+                  </button>
+                </Form>
 
                 <div class="row mt-4">
                   <div class="col-12 text-center">
@@ -78,3 +94,63 @@
   </div>
   <!-- end container -->
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import { ErrorMessage, Field, Form } from "vee-validate";
+import * as Yup from "yup";
+import Swal from "sweetalert2/dist/sweetalert2.min.js";
+
+export default defineComponent({
+  name: "sign-in",
+  components: {
+    Field,
+    Form,
+    ErrorMessage,
+  },
+  setup() {
+    const router = useRouter();
+    const loading = ref(false);
+
+    //Create form validation object
+    const login = Yup.object().shape({
+      email: Yup.string()
+        .email("Некоректный e-mail")
+        .required("Это поле обязательное"),
+      password: Yup.string().required("Это поле обязательное"),
+    });
+
+    const onSubmitLogin = async ({ email, password }: any) => {
+      loading.value = true;
+
+      setTimeout(() => {
+        loading.value = false;
+
+        if (email == "dilshat.osmanov05@gmail.com" && password == "Admin123!")
+          router.push({
+            path: "/main",
+          });
+        else {
+          Swal.fire({
+            icon: "error",
+            title: "Неверный логин или пароль!",
+            buttonsStyling: false,
+            confirmButtonText: "Продолжить",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+        }
+      }, 1000);
+    };
+
+    return {
+      login,
+      onSubmitLogin,
+      loading,
+    };
+  },
+});
+</script>
