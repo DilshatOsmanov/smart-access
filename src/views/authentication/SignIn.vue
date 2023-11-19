@@ -134,10 +134,10 @@ export default defineComponent({
           });
         else {
           Swal.fire({
-            icon: "error",
-            title: "Неверный логин или пароль!",
+            width: 310,
+            text: "Неверный логин или пароль!",
             buttonsStyling: false,
-            confirmButtonText: "Продолжить",
+            confirmButtonText: "Ок",
             customClass: {
               confirmButton: "btn btn-success",
             },
