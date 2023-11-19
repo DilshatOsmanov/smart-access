@@ -103,6 +103,12 @@ router.beforeEach((to, from, next) => {
     }, 100);
   }
 
+  // Add your condition to redirect to another page
+  // In this example, redirect to "/alternative-page" if the user is on a mobile device
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    return next('/sign-in');
+  }
+
   // secure routes
   if (!to.meta.middleware) {
     return next();
