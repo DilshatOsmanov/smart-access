@@ -1,91 +1,94 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import store from "@/store";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import store from '@/store';
 
 // @ts-ignore
-import isAuth from "./middleware/isAuth";
+import isAuth from './middleware/isAuth';
 // @ts-ignore
-import middlewarePipeline from "./middlewarePipeline";
+import middlewarePipeline from './middlewarePipeline';
+
+const mobileCondition = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  navigator.userAgent,
+);
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    component: () => import("@/views/Home.vue"),
+    path: '/',
+    component: () => import('@/views/Home.vue'),
+    meta: { middleware: [isAuth], mobileRedirect: mobileCondition },
+    beforeEnter: (to, from, next) => {
+      if (to.meta.mobileRedirect) {
+        return next('/sign-in');
+      }
+      next();
+    },
+  },
+  {
+    path: '/',
+    component: () => import('@/components/Layout.vue'),
     children: [
       {
-        path: "/",
-        name: "home",
-        component: () => import("@/views/Home.vue"),
+        path: '/main',
+        name: 'main',
+        component: () => import('@/views/Main.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/attendance',
+        name: 'attendance',
+        component: () => import('@/views/Attendance.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/users',
+        name: 'user-list',
+        component: () => import('@/views/UserList.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/tourniquets',
+        name: 'tourniquets',
+        component: () => import('@/views/Tourniquets.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('@/views/Profile.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        component: () => import('@/views/Settings.vue'),
         meta: { middleware: [isAuth] },
       },
     ],
   },
   {
-    path: "/",
-    component: () => import("@/components/Layout.vue"),
-    children: [
-      {
-        path: "/main",
-        name: "main",
-        component: () => import("@/views/Main.vue"),
-        meta: { middleware: [isAuth] },
-      },
-      {
-        path: "/attendance",
-        name: "attendance",
-        component: () => import("@/views/Attendance.vue"),
-        meta: { middleware: [isAuth] },
-      },
-      {
-        path: "/users",
-        name: "user-list",
-        component: () => import("@/views/UserList.vue"),
-        meta: { middleware: [isAuth] },
-      },
-      {
-        path: "/tourniquets",
-        name: "tourniquets",
-        component: () => import("@/views/Tourniquets.vue"),
-        meta: { middleware: [isAuth] },
-      },
-      {
-        path: "/profile",
-        name: "profile",
-        component: () => import("@/views/Profile.vue"),
-        meta: { middleware: [isAuth] },
-      },
-      {
-        path: "/settings",
-        name: "settings",
-        component: () => import("@/views/Settings.vue"),
-        meta: { middleware: [isAuth] },
-      },
-    ],
-  },
-  {
-    path: "/sign-in",
-    component: () => import("@/views/authentication/SignIn.vue"),
+    path: '/sign-in',
+    component: () => import('@/views/authentication/SignIn.vue'),
     meta: { middleware: [isAuth] },
   },
   {
-    path: "/sign-up",
-    component: () => import("@/views/authentication/SignUp.vue"),
+    path: '/sign-up',
+    component: () => import('@/views/authentication/SignUp.vue'),
     meta: { middleware: [isAuth] },
   },
   {
-    path: "/reset-password",
-    component: () => import("@/views/authentication/PasswordReset.vue"),
+    path: '/reset-password',
+    component: () => import('@/views/authentication/PasswordReset.vue'),
     meta: { middleware: [isAuth] },
   },
   {
-    path: "/404",
-    name: "404",
-    component: () => import("@/views/404.vue"),
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/404.vue'),
   },
   {
-    path: "/:pathMatch(.*)*",
-    redirect: "/404",
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
   },
 ];
 
@@ -101,11 +104,6 @@ router.beforeEach((to, from, next) => {
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 100);
-  }
-
-  // Redirect to "/sign-in" if the user is on a mobile device or navigating to the home page
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || to.path === '/') {
-    return next('/sign-in');
   }
 
   // Secure routes
@@ -126,6 +124,5 @@ router.beforeEach((to, from, next) => {
     nextMiddleware: middlewarePipeline(context, middleware, 1),
   });
 });
-
 
 export default router;
