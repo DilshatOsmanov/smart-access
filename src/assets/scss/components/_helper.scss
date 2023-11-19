@@ -41,6 +41,9 @@
 .mw-500px {
   max-width: 500px;
 }
+.min-vh-100 {
+  min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+}
 
 // Social
 
