@@ -74,6 +74,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: { middleware: [isAuth] },
   },
   {
+    path: "/reset-password",
+    component: () => import("@/views/authentication/PasswordReset.vue"),
+    meta: { middleware: [isAuth] },
+  },
+  {
     path: "/404",
     name: "404",
     component: () => import("@/views/404.vue"),

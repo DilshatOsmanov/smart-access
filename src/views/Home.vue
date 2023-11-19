@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
       <div class="container">
         <div class="navbar-brand-wrapper d-flex w-100">
-          <router-link to="/">
-            <img class="h-35px" src="@/assets/landing/images/logo.svg" alt="" />
+          <router-link class="d-flex align-items-center" to="/">
+            <img class="h-25px" src="@/assets/landing/images/logo.svg" alt="" />
           </router-link>
           <router-link
             to="/sign-in"
@@ -331,7 +331,12 @@
             <h4 class="pt-1">Свяжитесь с нами</h4>
           </div>
           <div data-aos="fade-up">
-            <button class="btn btn-rounded btn-outline-danger">Написать</button>
+            <a
+              href="tel:87084184650"
+              class="btn btn-rounded btn-outline-danger"
+            >
+              Позвонить
+            </a>
           </div>
         </div>
       </section>
@@ -364,7 +369,8 @@
 
       <footer class="border-top">
         <p class="text-center text-muted pt-4">
-          Copyright © 2024<a class="px-1">SmartAccess.</a>Все права защищены.
+          Copyright © 2024<span class="px-1">SmartAccess.</span>Все права
+          защищены.
         </p>
       </footer>
     </div>

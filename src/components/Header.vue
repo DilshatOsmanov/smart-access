@@ -4,30 +4,21 @@
       <div class="navbar-header">
         <div class="d-flex align-items-center">
           <div class="navbar-brand-box mr-3 mr-lg-5">
-            <router-link to="/" class="logo">
+            <router-link to="/main" class="logo">
               <span class="d-none d-lg-block">
-                <img src="@/assets/images/logo.svg" alt="" height="30" />
+                <img src="@/assets/images/logo.svg" alt="" height="22" />
               </span>
               <i class="d-lg-none">
-                <img src="@/assets/images/logo-small.svg" alt="" height="30" />
+                <img src="@/assets/images/logo-small.svg" alt="" height="24" />
               </i>
             </router-link>
           </div>
-
-          <button
-            type="button"
-            class="btn btn-sm mr-2 d-lg-none header-item"
-            data-toggle="collapse"
-            data-target="#topnav-menu-content"
-          >
-            <i class="fa fa-fw fa-bars"></i>
-          </button>
         </div>
         <div class="d-flex align-items-center">
           <div class="dropdown d-inline-block ml-2">
             <button
               type="button"
-              class="btn header-item"
+              class="btn header-item p-0"
               id="page-header-user-dropdown"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -55,11 +46,12 @@
               >
                 Настройки
               </router-link>
-              <button
+              <router-link
+                to="/sign-in"
                 class="dropdown-item d-flex align-items-center justify-content-between"
               >
                 <span>Выйти</span>
-              </button>
+              </router-link>
             </div>
           </div>
         </div>
