@@ -73,7 +73,6 @@
   bottom: 0;
   right: 0;
   left: 0;
-  height: 60px;
   border-top: 1px solid #dee2e6;
 
   &__inner {
@@ -82,7 +81,7 @@
     justify-content: space-between;
     padding: 0;
     margin: 0;
-    padding: 12px 0 36px 0;
+    padding: 6px 0 26px 0;
   }
 
   &__link {
