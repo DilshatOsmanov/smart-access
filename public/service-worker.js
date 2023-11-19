@@ -1,5 +1,5 @@
 // Имя кэша для версии сервис-воркера
-const CACHE_NAME = 'my-app-cache-v1';
+const CACHE_NAME = 'my-app-cache-v2';
 
 // Установка и активация сервис-воркера
 self.addEventListener('install', (event) => {
