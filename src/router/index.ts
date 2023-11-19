@@ -103,13 +103,12 @@ router.beforeEach((to, from, next) => {
     }, 100);
   }
 
-  // Add your condition to redirect to another page
-  // In this example, redirect to "/alternative-page" if the user is on a mobile device
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  // Redirect to "/sign-in" if the user is on a mobile device or navigating to the home page
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || to.path === '/') {
     return next('/sign-in');
   }
 
-  // secure routes
+  // Secure routes
   if (!to.meta.middleware) {
     return next();
   }
@@ -127,5 +126,6 @@ router.beforeEach((to, from, next) => {
     nextMiddleware: middlewarePipeline(context, middleware, 1),
   });
 });
+
 
 export default router;
