@@ -81,7 +81,7 @@
     justify-content: space-between;
     padding: 0;
     margin: 0;
-    padding: 6px 0 26px 0;
+    padding: 6px 0 21px 0;
   }
 
   &__link {
