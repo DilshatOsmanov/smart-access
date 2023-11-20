@@ -88,21 +88,8 @@ if (safari || /Version\/[\d+\.]+ Safari/.test(navigator.userAgent) === false) {
       ev.respondWith(
         caches.open(name).then((cache) => {
           return cache.match(ev.request).then((cached) => {
-            const now = new Date().getTime();
-
-            if (cached !== void 0) {
-              const url = new URL(cached.url),
-                cdate = cached.headers.get('date'),
-                then =
-                  (cdate !== null ? new Date(cdate) : new Date()).getTime() +
-                  Number(
-                    (cached.headers.get('cache-control') || '').replace(/[^\d]/g, '') || timeout,
-                  ) *
-                    1e3;
-
-              if (urls.includes(url.pathname) || then > now) {
-                return cached.clone();
-              }
+            if (cached) {
+              return cached;
             }
 
             return fetch(ev.request).then((res) => {
@@ -111,15 +98,6 @@ if (safari || /Version\/[\d+\.]+ Safari/.test(navigator.userAgent) === false) {
                 res.status === 200 &&
                 cacheable(res.headers.get('cache-control') || '')
               ) {
-                // Асинхронная операция, оборачиваем в waitUntil
-                self.clients
-                  .matchAll()
-                  .then((clients) =>
-                    clients.forEach((client) =>
-                      client.postMessage('New content is available. Please refresh.'),
-                    ),
-                  );
-
                 caches.open(name).then((cache) => {
                   cache.put(ev.request, res.clone());
                 });
