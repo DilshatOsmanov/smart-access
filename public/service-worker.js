@@ -1,6 +1,6 @@
 'use strict';
 
-const version = 1,
+const version = 2,
   name = `my-app-v${version}`,
   timeout = 1800,
   urls = ['https://smart-access-pi.vercel.app/'],
