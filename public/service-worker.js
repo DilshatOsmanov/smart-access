@@ -83,53 +83,53 @@ if (safari || /Version\/[\d+\.]+ Safari/.test(navigator.userAgent) === false) {
     const method = ev.request.method,
       http = /^https?\:/.test(ev.request.url),
       handle = hosts.length === 0 || hosts.includes(new URL(ev.request.url).hostname);
-    let result;
 
     if (http && handle && method === 'GET') {
-      result = ev.respondWith(
-        caches
-          .open(name)
-          .then((cache) => {
-            return cache.match(ev.request).then((cached) => {
-              const now = new Date().getTime();
-              let lresult;
+      ev.respondWith(
+        caches.open(name).then((cache) => {
+          return cache.match(ev.request).then((cached) => {
+            const now = new Date().getTime();
 
-              if (cached !== void 0) {
-                const url = new URL(cached.url),
-                  cdate = cached.headers.get('date'),
-                  then =
-                    (cdate !== null ? new Date(cdate) : new Date()).getTime() +
-                    Number(
-                      (cached.headers.get('cache-control') || '').replace(/[^\d]/g, '') || timeout,
-                    ) *
-                      1e3;
+            if (cached !== void 0) {
+              const url = new URL(cached.url),
+                cdate = cached.headers.get('date'),
+                then =
+                  (cdate !== null ? new Date(cdate) : new Date()).getTime() +
+                  Number(
+                    (cached.headers.get('cache-control') || '').replace(/[^\d]/g, '') || timeout,
+                  ) *
+                    1e3;
 
-                if (urls.includes(url.pathname) || then > now) {
-                  lresult = cached.clone();
-                }
+              if (urls.includes(url.pathname) || then > now) {
+                return cached.clone();
               }
+            }
 
-              if (lresult === void 0) {
-                lresult = fetch(ev.request).then((res) => {
-                  if (
-                    (res.type === 'basic' || res.type === 'cors') &&
-                    res.status === 200 &&
-                    cacheable(res.headers.get('cache-control') || '')
-                  ) {
-                    cache.put(ev.request, res.clone());
-                  }
+            return fetch(ev.request).then((res) => {
+              if (
+                (res.type === 'basic' || res.type === 'cors') &&
+                res.status === 200 &&
+                cacheable(res.headers.get('cache-control') || '')
+              ) {
+                // Асинхронная операция, оборачиваем в waitUntil
+                self.clients
+                  .matchAll()
+                  .then((clients) =>
+                    clients.forEach((client) =>
+                      client.postMessage('New content is available. Please refresh.'),
+                    ),
+                  );
 
-                  return res;
+                caches.open(name).then((cache) => {
+                  cache.put(ev.request, res.clone());
                 });
               }
 
-              return lresult;
+              return res;
             });
-          })
-          .catch(() => void 0),
+          });
+        }),
       );
     }
-
-    return result;
   });
 }
