@@ -6,5 +6,8 @@ module.exports = {
     workboxOptions: {
       navigateFallback: '/',
     },
+    workboxConfig: {
+      globPatterns: ['**/*.{js,jpg,png,html,css}'],
+    },
   },
 };
