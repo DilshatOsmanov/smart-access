@@ -1,48 +1,135 @@
-var cacheName = 'bemna-LAstLAP-2013';
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open('v1').then(function (cache) {
-      return cache.addAll([
-        '/',
-        // all file which you need to cache at start - static caching
-      ]);
-    }),
-  );
-});
-// To delete the old chache if name changed it will delete old chache
-self.addEventListener('activate', (event) => {
-  console.info('Event: Activate');
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== cacheName) {
-            return caches.delete(cache);
+'use strict';
+
+const version = 1,
+  name = `my-app-v${version}`,
+  timeout = 1800,
+  urls = [],
+  hosts = [],
+  reload = false,
+  safari = true,
+  announce = true,
+  cacheable = (arg) => (arg.includes('no-store') || arg.includes('max-age=0')) === false;
+
+function log(arg) {
+  console.log(`[serviceWorker:${new Date().getTime()}] ${arg}`);
+}
+
+if (safari || /Version\/[\d+\.]+ Safari/.test(navigator.userAgent) === false) {
+  self.addEventListener('activate', (ev) =>
+    ev.waitUntil(
+      caches
+        .keys()
+        .then((args) => {
+          const invalid = args.filter((i) => i !== name);
+          let result;
+
+          if (args.includes(name) === false) {
+            caches
+              .open(name)
+              .then((cache) => {
+                log('type=activate, cached=false, message="Caching core assets"');
+
+                return cache.addAll(urls);
+              })
+              .catch((err) => log(`type=error, action=activate, message="${err.message}"`));
+          } else {
+            log('type=activate, cached=true, message="Reusing cached core assets"');
           }
-        }),
-      );
-    }),
+
+          if (announce) {
+            self.clients.claim();
+            self.clients
+              .matchAll()
+              .then((clients) =>
+                clients.forEach((client) => client.postMessage(`version_${version}`)),
+              );
+          }
+
+          if (invalid.length === 0) {
+            log('type=delete, message="No stale caches"');
+            result = Promise.resolve();
+          } else {
+            log(`type=delete, message="Stale caches: ${invalid.toString()}"`);
+            result = Promise.all(
+              invalid.map((i) => {
+                log(`type=delete, message="Deleted stale cache ${i}"`);
+                caches.delete(i);
+
+                if (reload) {
+                  self.clients.claim();
+                  self.clients.matchAll().then((clients) =>
+                    clients.forEach((client) => {
+                      log('type=reload, message="Loading new version of application"');
+                      client.postMessage('reload');
+                    }),
+                  );
+                }
+              }),
+            );
+          }
+
+          return result;
+        })
+        .catch(() => void 0),
+    ),
   );
-});
-self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    // Cache first approch
-    caches.open(cacheName).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
-        return (
-          response ||
-          fetch(event.request).then(function (response) {
-            cache.put(event.request, response.clone());
-            return response;
+
+  self.addEventListener('install', (ev) => {
+    self.skipWaiting();
+    ev.waitUntil(() => log('type=install, message="New service worker installed"'));
+  });
+
+  self.addEventListener('fetch', (ev) => {
+    const method = ev.request.method,
+      http = /^https?\:/.test(ev.request.url),
+      handle = hosts.length === 0 || hosts.includes(new URL(ev.request.url).hostname);
+    let result;
+
+    if (http && handle && method === 'GET') {
+      result = ev.respondWith(
+        caches
+          .open(name)
+          .then((cache) => {
+            return cache.match(ev.request).then((cached) => {
+              const now = new Date().getTime();
+              let lresult;
+
+              if (cached !== void 0) {
+                const url = new URL(cached.url),
+                  cdate = cached.headers.get('date'),
+                  then =
+                    (cdate !== null ? new Date(cdate) : new Date()).getTime() +
+                    Number(
+                      (cached.headers.get('cache-control') || '').replace(/[^\d]/g, '') || timeout,
+                    ) *
+                      1e3;
+
+                if (urls.includes(url.pathname) || then > now) {
+                  lresult = cached.clone();
+                }
+              }
+
+              if (lresult === void 0) {
+                lresult = fetch(ev.request).then((res) => {
+                  if (
+                    (res.type === 'basic' || res.type === 'cors') &&
+                    res.status === 200 &&
+                    cacheable(res.headers.get('cache-control') || '')
+                  ) {
+                    cache.put(ev.request, res.clone());
+                  }
+
+                  return res;
+                });
+              }
+
+              return lresult;
+            });
           })
-        );
-      });
-    }),
-  );
-});
-self.addEventListener('sync', function (event) {
-  if (event.tag == 'myFirstSync') {
-    console.log('synching');
-  }
-  console.log('test');
-});
+          .catch(() => void 0),
+      );
+    }
+
+    return result;
+  });
+}
