@@ -3,7 +3,7 @@
 const version = 1,
   name = `my-app-v${version}`,
   timeout = 1800,
-  urls = [],
+  urls = ['https://smart-access-pi.vercel.app/'],
   hosts = [],
   reload = false,
   safari = true,
