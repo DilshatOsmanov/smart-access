@@ -1,9 +1,9 @@
 'use strict';
 
-const version = 2,
+const version = 3,
   name = `my-app-v${version}`,
   timeout = 1800,
-  urls = ['https://smart-access-pi.vercel.app/'],
+  urls = [],
   hosts = [],
   reload = false,
   safari = true,
@@ -83,31 +83,53 @@ if (safari || /Version\/[\d+\.]+ Safari/.test(navigator.userAgent) === false) {
     const method = ev.request.method,
       http = /^https?\:/.test(ev.request.url),
       handle = hosts.length === 0 || hosts.includes(new URL(ev.request.url).hostname);
+    let result;
 
     if (http && handle && method === 'GET') {
-      ev.respondWith(
-        caches.open(name).then((cache) => {
-          return cache.match(ev.request).then((cached) => {
-            if (cached) {
-              return cached;
-            }
+      result = ev.respondWith(
+        caches
+          .open(name)
+          .then((cache) => {
+            return cache.match(ev.request).then((cached) => {
+              const now = new Date().getTime();
+              let lresult;
 
-            return fetch(ev.request).then((res) => {
-              if (
-                (res.type === 'basic' || res.type === 'cors') &&
-                res.status === 200 &&
-                cacheable(res.headers.get('cache-control') || '')
-              ) {
-                caches.open(name).then((cache) => {
-                  cache.put(ev.request, res.clone());
+              if (cached !== void 0) {
+                const url = new URL(cached.url),
+                  cdate = cached.headers.get('date'),
+                  then =
+                    (cdate !== null ? new Date(cdate) : new Date()).getTime() +
+                    Number(
+                      (cached.headers.get('cache-control') || '').replace(/[^\d]/g, '') || timeout,
+                    ) *
+                      1e3;
+
+                if (urls.includes(url.pathname) || then > now) {
+                  lresult = cached.clone();
+                }
+              }
+
+              if (lresult === void 0) {
+                lresult = fetch(ev.request).then((res) => {
+                  if (
+                    (res.type === 'basic' || res.type === 'cors') &&
+                    res.status === 200 &&
+                    cacheable(res.headers.get('cache-control') || '')
+                  ) {
+                    cache.put(ev.request, res.clone());
+                  }
+
+                  return res;
                 });
               }
 
-              return res;
+              return lresult;
             });
-          });
-        }),
+          })
+          .catch(() => void 0),
       );
     }
+
+    return result;
   });
 }
