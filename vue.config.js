@@ -4,7 +4,6 @@ module.exports = {
     themeColor: '#f8f9fb',
     workboxOptions: {
       swSrc: 'service-worker.js',
-      navigatefallback: '/index.html',
     },
     appleMobileWebAppCapable: 'yes',
   },
