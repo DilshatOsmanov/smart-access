@@ -74,6 +74,8 @@
   right: 0;
   left: 0;
   border-top: 1px solid #dee2e6;
+  z-index: 1000;
+  background-color: #f8f9fb;
 
   &__inner {
     display: flex;
