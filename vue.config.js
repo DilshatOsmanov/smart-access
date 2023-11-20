@@ -4,7 +4,7 @@ module.exports = {
     themeColor: '#f8f9fb',
     appleMobileWebAppCapable: 'yes',
     workboxOptions: {
-      navigateFallback: 'index.html',
+      navigateFallback: '/',
     },
   },
 };
