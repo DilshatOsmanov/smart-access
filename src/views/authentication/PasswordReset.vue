@@ -21,20 +21,37 @@
                     Введите свой адрес электронной почты, и мы вышлем вам
                     электронное письмо с инструкциями по сбросу пароля.
                   </p>
-                  <form>
+                  <Form
+                    class="user"
+                    id="kt_login_signin_form"
+                    @submit="onSubmit"
+                    :validation-schema="register"
+                  >
                     <div class="form-group">
                       <label for="exampleInputEmail"
                         >Адрес электронной почты</label
                       >
-                      <input
+                      <Field
                         type="email"
+                        name="email"
                         class="form-control form-control-user"
-                        id="exampleInputEmail"
                         placeholder="Email адрес"
                       />
+                      <ErrorMessage class="text-danger" name="email" />
                     </div>
-                    <button class="btn btn-success btn-block">Отправить</button>
-                  </form>
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-block"
+                      :disabled="loading"
+                    >
+                      <span class="indicator-label"> Отправить </span>
+
+                      <span
+                        v-if="loading"
+                        class="spinner-border spinner-border-sm align-middle ml-2"
+                      ></span>
+                    </button>
+                  </Form>
 
                   <div class="row mt-5">
                     <div class="col-12 text-center">
@@ -75,3 +92,72 @@
   </div>
   <!-- end container -->
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+
+import { ErrorMessage, Field, Form } from "vee-validate";
+import * as Yup from "yup";
+import Swal from "sweetalert2/dist/sweetalert2.min.js";
+
+export default defineComponent({
+  name: "sign-in",
+  components: {
+    Field,
+    Form,
+    ErrorMessage,
+  },
+  setup() {
+    const router = useRouter();
+    const loading = ref(false);
+
+    //Create form validation object
+    const register = Yup.object().shape({
+      email: Yup.string()
+        .email("Некоректный e-mail")
+        .required("Это поле обязательное"),
+    });
+
+    const onSubmit = async (values: any) => {
+      loading.value = true;
+
+      setTimeout(() => {
+        loading.value = false;
+
+        if (values)
+          Swal.fire({
+            width: 310,
+            html: `На указанную почту <b>${values.email}</b> выслан новый пароль!`,
+            buttonsStyling: false,
+            confirmButtonText: "Ок",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          }).then(() => {
+            router.push({
+              path: "/sign-in",
+            });
+          });
+        else {
+          Swal.fire({
+            width: 310,
+            text: "Ошибка сервера!",
+            buttonsStyling: false,
+            confirmButtonText: "Ок",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+        }
+      }, 1000);
+    };
+
+    return {
+      register,
+      onSubmit,
+      loading,
+    };
+  },
+});
+</script>
