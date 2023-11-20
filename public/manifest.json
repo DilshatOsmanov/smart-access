@@ -2,6 +2,7 @@
   "name": "SmartAccess",
   "short_name": "SmartAccess",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "icons": [
     {
