@@ -1,10 +1,7 @@
 module.exports = {
   pwa: {
-    workboxPluginMode: 'InjectManifest',
+    workboxPluginMode: 'GenerateSW',
     themeColor: '#f8f9fb',
-    workboxOptions: {
-      swSrc: 'service-worker.js',
-    },
     appleMobileWebAppCapable: 'yes',
   },
 };
