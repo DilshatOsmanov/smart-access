@@ -60,9 +60,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
-        path: '/settings',
-        name: 'settings',
-        component: () => import('@/views/Settings.vue'),
+        path: '/change-account',
+        name: 'change-account',
+        component: () => import('@/views/ChangeAccountData.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/change-password',
+        name: 'change-password',
+        component: () => import('@/views/ChangePassword.vue'),
         meta: { middleware: [isAuth] },
       },
     ],

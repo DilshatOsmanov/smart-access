@@ -14,47 +14,14 @@
             </router-link>
           </div>
         </div>
-        <div class="d-flex align-items-center">
-          <div class="dropdown d-inline-block ml-2">
-            <button
-              type="button"
-              class="btn header-item p-0"
-              id="page-header-user-dropdown"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <img
-                class="rounded-circle header-profile-user"
-                src="@/assets/images/users/avatar-1.jpg"
-                alt="Header Avatar"
-              />
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-right"
-              aria-labelledby="page-header-user-dropdown"
-            >
-              <router-link
-                class="dropdown-item d-flex align-items-center justify-content-between"
-                to="/profile"
-              >
-                Профиль
-              </router-link>
-              <router-link
-                class="dropdown-item d-flex align-items-center justify-content-between"
-                to="/settings"
-              >
-                Настройки
-              </router-link>
-              <router-link
-                to="/sign-in"
-                class="dropdown-item d-flex align-items-center justify-content-between"
-              >
-                <span>Выйти</span>
-              </router-link>
-            </div>
-          </div>
-        </div>
+
+        <router-link to="/profile" class="btn header-item header-btn p-0">
+          <img
+            class="rounded-circle header-profile-user"
+            src="@/assets/images/users/avatar-1.jpg"
+            alt="Header Avatar"
+          />
+        </router-link>
       </div>
     </div>
   </header>
