@@ -1,8 +1,10 @@
 <template>
   <div id="layout-wrapper">
     <div class="main-content">
-      <Header />
-      <Navbar />
+      <div class="header-fixed">
+        <Header />
+        <Navbar />
+      </div>
 
       <div class="page-content">
         <div class="container-fluid">
@@ -32,3 +34,23 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.main-content {
+  padding-top: 135px;
+
+  @media screen and (max-width: 992px) {
+    padding-top: 128px;
+  }
+  @media screen and (max-width: 576px) {
+    padding-top: 80px;
+  }
+}
+
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+</style>
