@@ -73,14 +73,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: calc(
-    100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 220px
-  );
+  min-height: calc(100vh - 230px);
 
   @media screen and (max-width: 576px) {
-    min-height: calc(
-      100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 180px
-    );
+    min-height: calc(100vh - 180px);
   }
 }
 .content-forms {
