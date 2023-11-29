@@ -1,6 +1,33 @@
 <template>
   <div class="wrapper-forms">
     <div class="content-forms">
+      <div class="card card-body">
+        <h4 class="card-title">{{ $t("app_lang") }}</h4>
+
+        <div class="d-flex">
+          <button
+            @click="setLang('ru')"
+            class="btn btn-rounded mw-mc mr-1 px-3"
+            :class="{
+              'btn-primary': $i18n.locale == 'ru',
+              'btn-outline-secondary': $i18n.locale != 'ru',
+            }"
+          >
+            {{ $t("russian") }}
+          </button>
+          <button
+            @click="setLang('kz')"
+            class="btn btn-rounded mw-mc px-3"
+            :class="{
+              'btn-primary': $i18n.locale == 'kz',
+              'btn-outline-secondary': $i18n.locale != 'kz',
+            }"
+          >
+            {{ $t("kazakh") }}
+          </button>
+        </div>
+      </div>
+
       <div class="row d-none d-lg-flex">
         <div class="col-lg-8">
           <ChangeAccountData />
@@ -12,7 +39,7 @@
       </div>
 
       <div class="d-lg-none">
-        <div class="card card-body p-2 px-3">
+        <div class="card card-body p-3 mb-2">
           <router-link
             to="/change-account"
             class="text-secondary d-flex align-items-center"
@@ -21,7 +48,7 @@
             <i class="ml-auto feather-chevron-right font-size-18"></i>
           </router-link>
         </div>
-        <div class="card card-body p-2 px-3">
+        <div class="card card-body p-3 mb-2">
           <router-link
             to="/change-password"
             class="text-secondary d-flex align-items-center"
@@ -29,15 +56,6 @@
             <span>Изменить пароль</span>
             <i class="ml-auto feather-chevron-right font-size-18"></i>
           </router-link>
-        </div>
-      </div>
-
-      <div class="card card-body">
-        <h4 class="card-title">Язык приложения</h4>
-
-        <div class="d-flex">
-          <button class="btn btn-primary mw-mc mr-1">Русский</button>
-          <button class="btn btn-secondary mw-mc">Казахский</button>
         </div>
       </div>
     </div>
@@ -53,6 +71,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import { useI18n } from "vue-i18n/index";
+
 import ChangeAccountData from "@/components/profile/ChangeAccountData.vue";
 import ChangePassword from "@/components/profile/ChangePassword.vue";
 
@@ -63,7 +83,16 @@ export default defineComponent({
     ChangePassword,
   },
   setup() {
-    return {};
+    const i18n = useI18n();
+
+    const setLang = (lang: any): void => {
+      localStorage.setItem("lang", lang);
+      i18n.locale.value = lang;
+    };
+
+    return {
+      setLang,
+    };
   },
 });
 </script>
