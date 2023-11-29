@@ -7,9 +7,17 @@ const messages = {
     kazakh: "Қазақша"
   },
   ru: {
+    // profile page
     app_lang: "Язык приложения",
     russian: "Русский",
-    kazakh: "Қазақша"
+    kazakh: "Қазақша",
+
+    // tourniquests page
+    online: "Онлайн",
+    offline: "Оффлайн",
+    "not-connected": "Не подключен",
+    "one-door": "Однодверный",
+    "two-door": "Двухдверный",
   },
 };
 
