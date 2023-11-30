@@ -52,6 +52,6 @@ export default defineComponent({
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10000;
+  z-index: 1000;
 }
 </style>

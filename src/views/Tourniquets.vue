@@ -8,6 +8,7 @@
               <form class="form-inline">
                 <div class="form-group">
                   <input
+                    v-model="searchQuery"
                     type="search"
                     class="form-control"
                     id="inputPassword2"
@@ -15,20 +16,46 @@
                   />
                 </div>
                 <div class="form-group mx-sm-3">
-                  <select class="custom-select" id="status-select">
-                    <option selected="">Все</option>
-                    <option value="1">1 этаж</option>
-                    <option value="2">2 этаж</option>
-                    <option value="3">Цокольный этаж</option>
+                  <select
+                    v-model="tagQuery"
+                    class="custom-select"
+                    id="status-select"
+                  >
+                    <option value="all">Все</option>
+                    <option :value="tag.id" v-for="tag in tags" :key="tag.id">
+                      {{ tag.title }}
+                    </option>
                   </select>
                 </div>
               </form>
             </div>
             <div class="col-lg-4">
               <div class="text-lg-right mt-3 mt-lg-0">
-                <button type="button" class="btn btn-success mr-1">
-                  <i class="mdi mdi-settings"></i>
-                </button>
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-success dropdown-toggle mr-1"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    :disabled="settingsLoader"
+                  >
+                    <i v-if="!settingsLoader" class="mdi mdi-settings"></i>
+                    <span
+                      v-else
+                      class="spinner-border spinner-border-sm w-14px h-14px"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <button @click="allTourniquestsOff" class="dropdown-item">
+                      Отключить все турникеты
+                    </button>
+                  </div>
+                </div>
+
                 <router-link to="/add-tourniquest" class="btn btn-danger"
                   ><i class="mdi mdi-plus-circle mr-1"></i>
                   Добавить</router-link
@@ -44,7 +71,7 @@
   <div class="row">
     <div
       class="col-xl-3 col-lg-6"
-      v-for="tourniquest in tourniquests"
+      v-for="tourniquest in filteredTourniquests"
       :key="tourniquest.id"
     >
       <div class="card">
@@ -58,7 +85,7 @@
             <span class="text-dark">{{ tourniquest.title }}</span>
           </h5>
           <p v-if="tourniquest.tag" class="text-muted font-size-14 mb-1">
-            Тэг: {{ $t(tourniquest.tag) }}
+            Тэг: {{ tourniquest.tag.title }}
           </p>
           <p class="text-muted font-size-14 mb-1">
             Статус:
@@ -117,18 +144,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
+
+import Swal from "sweetalert2/dist/sweetalert2.min.js";
 
 export default defineComponent({
   name: "tourniquests",
   setup() {
+    const settingsLoader = ref(false);
+    const searchQuery = ref("");
+    const tagQuery = ref("all");
+
+    const tags = ref([
+      { id: 1, title: "1 этаж" },
+      { id: 2, title: "2 этаж" },
+      { id: 3, title: "Цокольный этаж" },
+    ]);
     const tourniquests = ref([
       {
         id: 1,
         title: "Турникет 1",
         status: "online",
         type: "one-door",
-        tag: "1 этаж",
+        tag: { id: 1, title: "1 этаж" },
         lastUpdated: "3",
         applicationDate: null,
       },
@@ -137,7 +175,7 @@ export default defineComponent({
         title: "Турникет 2",
         status: "offline",
         type: "one-door",
-        tag: "1 этаж",
+        tag: { id: 1, title: "1 этаж" },
         lastUpdated: "4",
         applicationDate: null,
       },
@@ -146,7 +184,7 @@ export default defineComponent({
         title: "Турникет 3",
         status: "not-connected",
         type: "two-door",
-        tag: "",
+        tag: null,
         lastUpdated: null,
         applicationDate: "29.11.2023",
       },
@@ -155,7 +193,7 @@ export default defineComponent({
         title: "Турникет 4",
         status: "online",
         type: "one-door",
-        tag: "1 этаж",
+        tag: { id: 1, title: "1 этаж" },
         lastUpdated: "3",
         applicationDate: null,
       },
@@ -164,7 +202,7 @@ export default defineComponent({
         title: "Турникет 5",
         status: "offline",
         type: "one-door",
-        tag: "1 этаж",
+        tag: { id: 1, title: "1 этаж" },
         lastUpdated: "4",
         applicationDate: null,
       },
@@ -173,14 +211,49 @@ export default defineComponent({
         title: "Турникет 6",
         status: "not-connected",
         type: "two-door",
-        tag: "",
+        tag: null,
         lastUpdated: null,
         applicationDate: "29.11.2023",
       },
     ]);
 
+    const filteredTourniquests = computed(() =>
+      (tourniquests.value as any)
+        .filter((item) =>
+          tagQuery.value != "all" ? item?.tag?.id == tagQuery.value : true
+        )
+        .filter((item) =>
+          item.title
+            .toLowerCase()
+            .includes(searchQuery.value.trim().toLowerCase())
+        )
+    );
+
+    const allTourniquestsOff = () => {
+      settingsLoader.value = true;
+
+      setTimeout(() => {
+        settingsLoader.value = false;
+
+        Swal.fire({
+          width: 310,
+          text: "Все турникеты выключены!",
+          buttonsStyling: false,
+          confirmButtonText: "Ок",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }, 1000);
+    };
+
     return {
-      tourniquests,
+      filteredTourniquests,
+      searchQuery,
+      tagQuery,
+      tags,
+      allTourniquestsOff,
+      settingsLoader,
     };
   },
 });
