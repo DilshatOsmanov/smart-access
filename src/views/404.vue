@@ -15,7 +15,7 @@
                       <img
                         src="@/assets/images/logo.svg"
                         alt="app-logo"
-                        height="35"
+                        height="25"
                       />
                     </a>
                   </div>

@@ -54,6 +54,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
+        path: '/add-tourniquet',
+        name: 'add-tourniquet',
+        component: () => import('@/views/AddTourniquet.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
         path: '/profile',
         name: 'profile',
         component: () => import('@/views/Profile.vue'),

@@ -5,7 +5,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-lg-8">
-              <form class="form-inline">
+              <div class="form-inline">
                 <div class="form-group">
                   <input
                     v-model="searchQuery"
@@ -27,7 +27,7 @@
                     </option>
                   </select>
                 </div>
-              </form>
+              </div>
             </div>
             <div class="col-lg-4">
               <div class="text-lg-right mt-3 mt-lg-0">
@@ -49,14 +49,14 @@
                     ></span>
                   </button>
 
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <button @click="allTourniquestsOff" class="dropdown-item">
+                  <div class="dropdown-menu">
+                    <button @click="allTourniquetsOff" class="dropdown-item">
                       Отключить все турникеты
                     </button>
                   </div>
                 </div>
 
-                <router-link to="/add-tourniquest" class="btn btn-danger"
+                <router-link to="/add-tourniquet" class="btn btn-danger"
                   ><i class="mdi mdi-plus-circle mr-1"></i>
                   Добавить</router-link
                 >
@@ -71,7 +71,7 @@
   <div class="row">
     <div
       class="col-xl-3 col-lg-6"
-      v-for="tourniquest in filteredTourniquests"
+      v-for="tourniquest in filteredTourniquets"
       :key="tourniquest.id"
     >
       <div class="card">
@@ -149,7 +149,7 @@ import { defineComponent, ref, computed } from "vue";
 import Swal from "sweetalert2/dist/sweetalert2.min.js";
 
 export default defineComponent({
-  name: "tourniquests",
+  name: "tourniquets",
   setup() {
     const settingsLoader = ref(false);
     const searchQuery = ref("");
@@ -160,7 +160,7 @@ export default defineComponent({
       { id: 2, title: "2 этаж" },
       { id: 3, title: "Цокольный этаж" },
     ]);
-    const tourniquests = ref([
+    const tourniquets = ref([
       {
         id: 1,
         title: "Турникет 1",
@@ -217,8 +217,8 @@ export default defineComponent({
       },
     ]);
 
-    const filteredTourniquests = computed(() =>
-      (tourniquests.value as any)
+    const filteredTourniquets = computed(() =>
+      (tourniquets.value as any)
         .filter((item) =>
           tagQuery.value != "all" ? item?.tag?.id == tagQuery.value : true
         )
@@ -229,7 +229,7 @@ export default defineComponent({
         )
     );
 
-    const allTourniquestsOff = () => {
+    const allTourniquetsOff = () => {
       settingsLoader.value = true;
 
       setTimeout(() => {
@@ -248,11 +248,11 @@ export default defineComponent({
     };
 
     return {
-      filteredTourniquests,
+      filteredTourniquets,
       searchQuery,
       tagQuery,
       tags,
-      allTourniquestsOff,
+      allTourniquetsOff,
       settingsLoader,
     };
   },
