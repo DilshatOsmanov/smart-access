@@ -60,6 +60,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
+        path: '/tags',
+        name: 'tags-page',
+        component: () => import('@/views/TagsPage.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
         path: '/profile',
         name: 'profile',
         component: () => import('@/views/Profile.vue'),

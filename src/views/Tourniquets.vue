@@ -53,6 +53,9 @@
                     <button @click="allTourniquetsOff" class="dropdown-item">
                       Отключить все турникеты
                     </button>
+                    <router-link to="/tags" class="dropdown-item">
+                      Редактировать теги
+                    </router-link>
                   </div>
                 </div>
 
@@ -237,7 +240,7 @@ export default defineComponent({
 
         Swal.fire({
           width: 310,
-          text: "Все турникеты выключены!",
+          text: "Все турникеты отключены!",
           buttonsStyling: false,
           confirmButtonText: "Ок",
           customClass: {
