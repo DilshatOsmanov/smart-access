@@ -1,8 +1,8 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div v-if="!loading" class="col-lg-8">
       <div class="card card-body">
-        <h4 class="card-title">Добавить пользователя</h4>
+        <h4 class="card-title">Профиль пользователя</h4>
 
         <div class="avatar__wrapper dropdown">
           <i
@@ -144,7 +144,7 @@
             class="btn btn-outline-success btn-block"
             :disabled="user_loading"
           >
-            <span class="indicator-label"> Добавить </span>
+            <span class="indicator-label"> Обновить </span>
 
             <span
               v-if="user_loading"
@@ -154,17 +154,21 @@
         </form>
       </div>
     </div>
+
+    <Loader v-else />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import { ErrorMessage, Field } from "vee-validate";
 import { useForm } from "vee-validate";
 import * as Yup from "yup";
 import Swal from "sweetalert2/dist/sweetalert2.min.js";
+
+import Loader from "@/components/Loader.vue";
 
 interface UserInterface {
   user_avatar: any;
@@ -181,11 +185,122 @@ export default defineComponent({
   components: {
     Field,
     ErrorMessage,
+    Loader,
   },
   setup() {
+    const route = useRoute();
     const router = useRouter();
+    const id = ref(parseInt(route.params.id as any));
+    const loading = ref(false);
     const user_loading = ref(false);
     const avatar_loading = ref(false);
+
+    const users = ref([
+      {
+        id: 1,
+        firstName: "Дильшат",
+        lastName: "Османов",
+        middleName: "",
+        phoneNumber: "8 (708) 418 47 50",
+        email: "dilshat.osmanov05@gmail.com",
+        group: {
+          id: 1,
+          title: "ПН-ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 2,
+        firstName: "Павел",
+        lastName: "Семенов",
+        middleName: "",
+        phoneNumber: "8 (707) 511 47 50",
+        email: "pavel.semen@gmail.com",
+        group: {
+          id: 2,
+          title: "ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 3,
+        firstName: "Иван",
+        lastName: "Иванов",
+        middleName: "",
+        phoneNumber: "8 (701) 123 45 67",
+        email: "ivan.ivanov@gmail.com",
+        group: {
+          id: 1,
+          title: "ПН-ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 4,
+        firstName: "Елена",
+        lastName: "Смирнова",
+        middleName: "",
+        phoneNumber: "8 (702) 987 65 43",
+        email: "elena.smirnova@gmail.com",
+        group: {
+          id: 2,
+          title: "ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 5,
+        firstName: "Алексей",
+        lastName: "Петров",
+        middleName: "",
+        phoneNumber: "8 (703) 567 89 01",
+        email: "alexey.petrov@gmail.com",
+        group: {
+          id: 1,
+          title: "ПН-ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 6,
+        firstName: "Мария",
+        lastName: "Козлова",
+        middleName: "",
+        phoneNumber: "8 (704) 321 09 87",
+        email: "maria.kozlova@gmail.com",
+        group: {
+          id: 2,
+          title: "ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 7,
+        firstName: "Сергей",
+        lastName: "Николаев",
+        middleName: "",
+        phoneNumber: "8 (705) 765 43 21",
+        email: "sergey.nikolaev@gmail.com",
+        group: {
+          id: 1,
+          title: "ПН-ВТ-СР",
+        },
+        imageUrl: "",
+      },
+      {
+        id: 8,
+        firstName: "Анна",
+        lastName: "Игнатьева",
+        middleName: "",
+        phoneNumber: "8 (706) 210 98 76",
+        email: "anna.ignatieva@gmail.com",
+        group: {
+          id: 2,
+          title: "ВТ-СР",
+        },
+        imageUrl: "",
+      },
+    ]);
 
     const groups = ref([
       {
@@ -288,9 +403,10 @@ export default defineComponent({
       group_id: Yup.string().nullable(),
     });
 
-    const { values, resetForm, handleSubmit } = useForm<UserInterface>({
-      validationSchema: UserValidator,
-    });
+    const { values, resetForm, handleSubmit, setValues } =
+      useForm<UserInterface>({
+        validationSchema: UserValidator,
+      });
 
     resetForm({
       values: {
@@ -307,7 +423,7 @@ export default defineComponent({
         if (values)
           Swal.fire({
             width: 310,
-            text: "Пользователь успешно добавлен!",
+            text: "Данные пользователя успешно обновлены!",
             buttonsStyling: false,
             confirmButtonText: "Продолжить",
             customClass: {
@@ -330,7 +446,26 @@ export default defineComponent({
       }, 1000);
     });
 
+    onMounted(() => {
+      loading.value = true;
+      setTimeout(() => {
+        let currentUser = users.value.find(
+          (item) => item.id == (id.value as any)
+        );
+        setValues({
+          last_name: currentUser?.lastName,
+          first_name: currentUser?.firstName,
+          middle_name: currentUser?.middleName,
+          email: currentUser?.email,
+          phone_number: currentUser?.phoneNumber,
+          group_id: currentUser?.group.id,
+        });
+        loading.value = false;
+      }, 1000);
+    });
+
     return {
+      loading,
       groups,
       onSubmit,
       user_loading,

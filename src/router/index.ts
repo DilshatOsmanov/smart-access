@@ -48,6 +48,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
+        path: '/users/:id(\\d+)',
+        name: 'change-user',
+        component: () => import('@/views/ChangeUser.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
         path: '/add-user',
         name: 'add-user',
         component: () => import('@/views/AddUser.vue'),

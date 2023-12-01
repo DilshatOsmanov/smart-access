@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card card-body">
         <h4 class="card-title">Заявка на добавление турникета</h4>
