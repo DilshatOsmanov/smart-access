@@ -36,9 +36,14 @@
 
                   <div class="row mt-4">
                     <div class="col-12 text-center">
-                      <router-link to="/" class="btn btn-success"
-                        ><i class="mdi mdi-home mr-2"></i>Вернуться на главную
-                      </router-link>
+                      <button
+                        @click="
+                          hasHistory() ? $router.go(-1) : $router.push('/')
+                        "
+                        class="btn btn-success"
+                      >
+                        <i class="mdi mdi-home mr-2"></i>Вернуться назад
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -50,3 +55,19 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  setup() {
+    const hasHistory = () => {
+      return window.history.length > 2;
+    };
+
+    return {
+      hasHistory,
+    };
+  },
+});
+</script>
