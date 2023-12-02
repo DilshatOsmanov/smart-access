@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Последнее посещение</h4>
+      <h4 class="card-title">Последние посещения</h4>
       <p class="card-subtitle mb-4">Таблица последних пяти посещений</p>
 
       <div class="table-responsive">
