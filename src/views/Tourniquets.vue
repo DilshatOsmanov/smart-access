@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="form-inline">
-                <div class="form-group">
+                <div class="form-group mr-sm-3 w-sm-100">
                   <input
                     v-model="searchQuery"
                     type="search"
@@ -15,7 +15,7 @@
                     placeholder="Поиск..."
                   />
                 </div>
-                <div class="form-group mx-sm-3">
+                <div class="form-group mr-sm-3 w-sm-100">
                   <select
                     v-model="tagQuery"
                     class="custom-select"
@@ -30,11 +30,26 @@
               </div>
             </div>
             <div class="col-lg-4">
-              <div class="text-lg-right mt-3 mt-lg-0">
-                <div class="btn-group">
+              <div
+                class="d-flex justify-content-between justify-content-sm-start justify-content-lg-end text-lg-right mt-sm-3 mt-lg-0"
+              >
+                <router-link to="/add-tourniquet" class="btn btn-danger mr-1"
+                  ><i class="mdi mdi-plus-circle mr-1"></i>
+                  Добавить</router-link
+                >
+                <div class="d-block">
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <button @click="allTourniquetsOff" class="dropdown-item">
+                      Отключить все турникеты
+                    </button>
+                    <router-link to="/tags" class="dropdown-item">
+                      Редактировать теги
+                    </router-link>
+                  </div>
+
                   <button
                     type="button"
-                    class="btn btn-success dropdown-toggle mr-1"
+                    class="btn btn-success dropdown-toggle"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -48,21 +63,7 @@
                       aria-hidden="true"
                     ></span>
                   </button>
-
-                  <div class="dropdown-menu">
-                    <button @click="allTourniquetsOff" class="dropdown-item">
-                      Отключить все турникеты
-                    </button>
-                    <router-link to="/tags" class="dropdown-item">
-                      Редактировать теги
-                    </router-link>
-                  </div>
                 </div>
-
-                <router-link to="/add-tourniquet" class="btn btn-danger"
-                  ><i class="mdi mdi-plus-circle mr-1"></i>
-                  Добавить</router-link
-                >
               </div>
             </div>
           </div>

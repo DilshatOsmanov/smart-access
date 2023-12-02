@@ -52,8 +52,8 @@
             <label>Тип турникета* </label>
 
             <div class="row">
-              <div class="col-6 mb-3 mb-sm-0">
-                <label class="w-100" for="tourniquet_type_one-door">
+              <div class="col-6 mb-0">
+                <label class="w-100 mb-0" for="tourniquet_type_one-door">
                   <div class="card w-100 mb-0">
                     <img
                       class="card-img-top mh-200px object-fit-contain"
@@ -76,7 +76,7 @@
                 </label>
               </div>
               <div class="col-6">
-                <label class="w-100" for="tourniquet_type_two-door">
+                <label class="w-100 mb-0" for="tourniquet_type_two-door">
                   <div class="card w-100 mb-0">
                     <img
                       class="card-img-top mh-200px object-fit-contain"

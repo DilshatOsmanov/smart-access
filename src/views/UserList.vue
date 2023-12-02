@@ -6,14 +6,14 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="form-inline">
-                <div class="form-group">
+                <div class="form-group mr-sm-3 w-sm-100">
                   <input
                     type="search"
                     class="form-control"
                     placeholder="Поиск..."
                   />
                 </div>
-                <div class="form-group mx-sm-3">
+                <div class="form-group mr-sm-3 w-sm-100">
                   <select class="custom-select" id="status-select">
                     <option value="all">Все</option>
                     <option
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="col-lg-4">
-              <div class="text-lg-right mt-3 mt-lg-0">
+              <div class="text-lg-right mt-sm-3 mt-lg-0">
                 <router-link to="/add-user" class="btn btn-danger"
                   ><i class="mdi mdi-plus-circle mr-1"></i>
                   Добавить</router-link
