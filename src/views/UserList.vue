@@ -44,7 +44,7 @@
   <div class="card">
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table mb-0">
+        <table class="table table-centered table-striped table-nowrap mb-0">
           <thead>
             <tr>
               <th>Пользователь</th>
@@ -233,10 +233,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-th,
-td {
-  vertical-align: middle;
-}
-</style>
