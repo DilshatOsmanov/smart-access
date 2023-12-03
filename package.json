@@ -23,7 +23,13 @@
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
     "vuex-router-sync": "^5.0.0",
-    "yup": "^0.32.8"
+    "yup": "^0.32.8",
+    "@fullcalendar/core": "5.11.3",
+    "@fullcalendar/daygrid": "5.11.3",
+    "@fullcalendar/interaction": "5.11.3",
+    "@fullcalendar/list": "5.11.3",
+    "@fullcalendar/timegrid": "5.11.3",
+    "@fullcalendar/vue3": "5.11.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
