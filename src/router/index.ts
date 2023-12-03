@@ -42,6 +42,24 @@ const routes: Array<RouteRecordRaw> = [
         meta: { middleware: [isAuth] },
       },
       {
+        path: '/attendance/:id(\\d+)',
+        name: 'change-attendance',
+        component: () => import('@/views/ChangeAttendance.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/attendance/:id(\\d+)/users',
+        name: 'add-attendance-users',
+        component: () => import('@/views/AddAttendanceUsers.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
+        path: '/add-attendance',
+        name: 'add-attendance',
+        component: () => import('@/views/AddAttendance.vue'),
+        meta: { middleware: [isAuth] },
+      },
+      {
         path: '/users',
         name: 'user-list',
         component: () => import('@/views/UserList.vue'),

@@ -22,11 +22,9 @@
             @click="deleteTag(tag.id)"
             type="button"
             class="btn btn-danger nrounded-0 rounded-right"
+            :disabled="tag.loading"
           >
-            <i
-              v-if="!deleteTagLoading.status || deleteTagLoading.id != tag.id"
-              class="mdi mdi-delete"
-            ></i>
+            <i v-if="!tag.loading" class="mdi mdi-delete"></i>
             <span
               v-else
               class="spinner-border spinner-border-sm w-14px h-14px"
@@ -68,7 +66,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "tags-page",
   setup() {
-    const tags = ref([
+    const tags = ref(<any>[
       { id: "1", title: "1 этаж" },
       { id: "2", title: "2 этаж" },
       { id: "3", title: "Цокольный этаж" },
@@ -76,7 +74,6 @@ export default defineComponent({
     const newTag = ref("");
 
     const loading = ref(false);
-    const deleteTagLoading = ref({ id: "", status: false });
 
     const addTag = async () => {
       if (newTag.value.trim().length) {
@@ -92,13 +89,17 @@ export default defineComponent({
     };
 
     const deleteTag = async (id) => {
-      deleteTagLoading.value.status = true;
-      deleteTagLoading.value.id = id;
+      let index = tags.value.findIndex((tag: any) => tag.id == id);
+      if (tags.value[index]) {
+        tags.value[index].loading = true;
+      }
 
       setTimeout(() => {
-        deleteTagLoading.value.status = false;
+        if (tags.value[index]) {
+          tags.value[index].loading = false;
+        }
 
-        tags.value = tags.value.filter((tag) => tag.id != id);
+        tags.value = tags.value.filter((tag: any) => tag.id != id);
       }, 1000);
     };
 
@@ -107,7 +108,6 @@ export default defineComponent({
       addTag,
       deleteTag,
       loading,
-      deleteTagLoading,
       newTag,
     };
   },
