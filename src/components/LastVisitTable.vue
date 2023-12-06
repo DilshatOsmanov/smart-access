@@ -7,7 +7,7 @@
       <div class="table-responsive">
         <table class="table table-centered table-striped table-nowrap mb-0">
           <thead>
-            <tr>
+            <tr class="d-none d-sm-table-row">
               <th>Пользователь</th>
               <th>Дата посещения</th>
               <th>Группа</th>
@@ -19,7 +19,7 @@
               <th>
                 <div class="d-flex align-items-center">
                   <img
-                    class="rounded-circle w-40px mr-2"
+                    class="rounded-circle w-40px mr-2 d-none d-sm-block"
                     src="@/assets/images/users/avatar-1.jpg"
                     alt="Avatar"
                   />
@@ -29,8 +29,13 @@
                   </span>
                 </div>
               </th>
-              <td>{{ user.lastVisitDate }}</td>
-              <td>{{ user.group.title }}</td>
+
+              <td class="d-none d-sm-table-cell">{{ user.lastVisitDate }}</td>
+              <td class="d-none d-sm-table-cell">{{ user.group.title }}</td>
+              <td class="d-sm-none">
+                <span>{{ user.lastVisitDate }}</span> <br />
+                <span>{{ user.group.title }}</span>
+              </td>
               <td>
                 <router-link :to="`/users/${user.id}`" class="btn btn-primary">
                   <i class="feather-arrow-right"></i>
