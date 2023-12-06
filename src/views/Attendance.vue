@@ -34,20 +34,24 @@
       <div class="table-responsive">
         <table class="table table-centered table-striped table-nowrap mb-0">
           <thead>
-            <tr>
+            <tr class="d-none d-sm-table-row">
               <th>Название</th>
               <th>Расписание</th>
               <th>Количество участников</th>
               <th class="w-40px"></th>
             </tr>
+            <tr class="d-sm-none">
+              <th>Группа | Расписание</th>
+              <th class="w-40px"></th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="group in groups" :key="group.id">
-              <th>
+              <th class="d-none d-sm-table-cell">
                 {{ group.title }}
               </th>
               <td>{{ group.timesheet }}</td>
-              <td>{{ group.count }}</td>
+              <td class="d-none d-sm-table-cell">{{ group.count }}</td>
               <td>
                 <router-link
                   :to="`/attendance/${group.id}`"

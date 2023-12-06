@@ -46,10 +46,15 @@
       <div class="table-responsive">
         <table class="table table-centered table-striped table-nowrap mb-0">
           <thead>
-            <tr>
+            <tr class="d-none d-sm-table-row">
               <th>Пользователь</th>
               <th>Почта</th>
               <th>Номер телефона</th>
+              <th>Группа</th>
+              <th class="w-40px"></th>
+            </tr>
+            <tr class="d-sm-none">
+              <th>Пользователь</th>
               <th>Группа</th>
               <th class="w-40px"></th>
             </tr>
@@ -59,7 +64,7 @@
               <th>
                 <div class="d-flex align-items-center">
                   <img
-                    class="rounded-circle w-40px mr-2"
+                    class="rounded-circle w-40px mr-2 d-none d-sm-block"
                     src="@/assets/images/users/avatar-1.jpg"
                     alt="Avatar"
                   />
@@ -69,8 +74,8 @@
                   </span>
                 </div>
               </th>
-              <td>{{ user.email }}</td>
-              <td>{{ user.phoneNumber }}</td>
+              <td class="d-none d-sm-table-cell">{{ user.email }}</td>
+              <td class="d-none d-sm-table-cell">{{ user.phoneNumber }}</td>
               <td>{{ user.group.title }}</td>
               <td>
                 <router-link :to="`/users/${user.id}`" class="btn btn-primary">
